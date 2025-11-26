@@ -50,7 +50,7 @@ export function Step3Period({ onNext, monthlyFee }: Step3PeriodProps) {
       >
         <div className="flex items-center gap-2 mb-6">
           <h1 className="text-2xl font-bold text-slate-900">
-            약정 기간은 몇년 남았나요?
+            남은 약정 기간
           </h1>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}

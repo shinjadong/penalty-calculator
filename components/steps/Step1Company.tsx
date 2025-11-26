@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 interface Step1CompanyProps {
   onSelect: (company: "에스원" | "캡스") => void;
@@ -18,7 +19,7 @@ export function Step1Company({ onSelect }: Step1CompanyProps) {
       className="flex flex-col items-start w-full px-6 pt-4 pb-8 min-h-[80vh]"
     >
       <h1 className="text-2xl font-bold text-slate-900 mb-2">
-        어떤 CCTV 쓰시나요?
+        사용중인 보안서비스
       </h1>
 
       {!showOptions && (
@@ -58,30 +59,62 @@ export function Step1Company({ onSelect }: Step1CompanyProps) {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-50 pb-safe"
+              className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-50"
             >
-              <div className="px-6 py-6">
+              <div className="px-6 py-8 pb-12">
                 {/* 핸들 바 */}
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-6">
                   <div className="w-12 h-1 bg-slate-300 rounded-full" />
                 </div>
 
+                <p className="text-lg font-bold text-slate-900 mb-6 text-center">
+                  업체명을 선택해주세요
+                </p>
 
-
-                <div className="space-y-3">
+                {/* 가로 2개 그리드 */}
+                <div className="grid grid-cols-2 gap-4">
+                  {/* 에스원 카드 */}
                   <motion.button
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => onSelect("에스원")}
-                    className="w-full h-14 px-6 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 rounded-xl font-semibold text-slate-800 transition-colors"
+                    className="flex flex-col items-center justify-center p-6 bg-slate-50 hover:bg-slate-100 active:bg-slate-200 rounded-2xl transition-colors aspect-square"
                   >
-                    에스원
+                    {/* 로고 영역 */}
+                    <div className="w-20 h-20 mb-4 bg-slate-50 rounded-2xl flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://img.hankyung.com/photo/202303/01.26756518.1.jpg"
+                        alt="에스원 로고"
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                      />
+                    </div>
+                    {/* 업체명 */}
+                    <span className="text-base font-semibold text-slate-800">
+                      에스원
+                    </span>
                   </motion.button>
+
+                  {/* 캡스 카드 */}
                   <motion.button
-                    whileTap={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => onSelect("캡스")}
-                    className="w-full h-14 px-6 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 rounded-xl font-semibold text-slate-800 transition-colors"
+                    className="flex flex-col items-center justify-center p-6 bg-slate-50 hover:bg-slate-100 active:bg-slate-200 rounded-2xl transition-colors aspect-square"
                   >
-                    캡스
+                    {/* 로고 영역 */}
+                    <div className="w-20 h-20 mb-4 bg-slate-50 rounded-2xl flex items-center justify-center overflow-hidden">
+                      <Image
+                        src="https://www.boannews.com/media/upFiles/adt_1_.jpg"
+                        alt="캡스 로고"
+                        width={80}
+                        height={80}
+                        className="object-contain"
+                      />
+                    </div>
+                    {/* 업체명 */}
+                    <span className="text-base font-semibold text-slate-800">
+                      캡스
+                    </span>
                   </motion.button>
                 </div>
               </div>
