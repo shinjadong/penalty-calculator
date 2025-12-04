@@ -7,9 +7,16 @@ import Image from "next/image";
 interface Step4ResultProps {
   penalty: number;
   company: "에스원" | "캡스" | null;
+  onNext: () => void;  // 다음 스텝(면제 확인)으로 이동
 }
 
-export function Step4Result({ penalty, company }: Step4ResultProps) {
+/**
+ * Step4Result - 위약금 계산 결과를 보여주는 컴포넌트
+ * 
+ * 💡 비유: 마트에서 장바구니에 물건을 담고 "총 금액"을 확인하는 단계예요.
+ * 여기서 "면제 대상 확인" 버튼을 누르면 할인 쿠폰(면제 혜택)을 적용하러 가는 거죠!
+ */
+export function Step4Result({ penalty, company, onNext }: Step4ResultProps) {
   const springValue = useSpring(0, { bounce: 0, duration: 1500 });
   const displayValue = useTransform(springValue, (value) =>
     Math.floor(value).toLocaleString("ko-KR")
@@ -18,11 +25,6 @@ export function Step4Result({ penalty, company }: Step4ResultProps) {
   useEffect(() => {
     springValue.set(penalty);
   }, [penalty, springValue]);
-
-  const handleExemption = () => {
-    // 바로 외부 링크로 이동
-    window.location.href = "https://kt-cctv.ai.kr/";
-  };
 
   return (
     <motion.div
@@ -35,15 +37,20 @@ export function Step4Result({ penalty, company }: Step4ResultProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
-        className="mb-8"
+        className="mb-8 w-full"
       >
-        <h1 className="text-2xl font-bold text-slate-900">
-          고객님의 남은 위약금은<br /> {" "}
-          <motion.span className="font-black text-slate-900">
+        <p className="text-lg font-medium text-slate-500 mb-2">
+          고객님의 남은 위약금은
+        </p>
+        <div className="flex items-baseline gap-1">
+          <motion.span className="text-5xl font-black text-slate-900 tracking-tight">
             {displayValue}
           </motion.span>
-          원이에요!
-        </h1>
+          <span className="text-3xl font-bold text-slate-900">원</span>
+        </div>
+        <p className="text-xl font-semibold text-slate-700 mt-2">
+          이에요!
+        </p>
       </motion.div>
 
       {/* 이미지 */}
@@ -69,10 +76,10 @@ export function Step4Result({ penalty, company }: Step4ResultProps) {
         className="fixed bottom-0 left-0 right-0 px-6 pb-8 bg-white"
       >
         <button
-          onClick={handleExemption}
+          onClick={onNext}
           className="w-full h-14 bg-[#3182F6] hover:bg-[#2272e6] active:bg-[#1b62d6] text-white font-bold text-lg rounded-xl shadow-lg transition-colors mb-4"
         >
-          면제 받아보기
+          면제 대상 확인
         </button>
         <p className="text-xs text-slate-400 text-center">
           * 공식적으로 소개된 위약금율에 기반한 결과입니다. <br /> 이는 법적 효과가 없음을 알려드립니다.
